@@ -11,6 +11,6 @@ type App struct {
 
 // Initialize initializes the app with predefined configuration
 func (a *App) Initialize() {
-	db = utils.Datastore{}.Initialize()
-	router.SetupHttpListeners()
+	db := utils.InitializeDatastore()
+	router.SetupHttpListeners(db)
 }

@@ -1,19 +1,15 @@
 package router
 
 import (
-	"fmt"
+	"github.com/connormakh/pwHashApi/app/utils"
 	"log"
 	"net/http"
 )
 
-func homePage(w http.ResponseWriter, r *http.Request){
-	fmt.Fprintf(w, "Welcome to the HomePage!")
-	fmt.Println("Endpoint Hit: homePage")
-}
+func SetupHttpListeners(db *utils.Datastore) {
+	HandleHashRequests(db)
+	HandleStatsRequests(db)
 
-func SetupHttpListeners() {
-	HandleHashRequests()
-	HandleStatsRequests()
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }
 

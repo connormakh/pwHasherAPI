@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-func handlerWrapper(path string, handler http.Handler, method string) {
+func handlerWrapper(path string, handler http.Handler, method string, db *Datastore) {
 	handleFunction := func (w http.ResponseWriter, r *http.Request) {
 		if r.Method != method {
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -15,10 +15,10 @@ func handlerWrapper(path string, handler http.Handler, method string) {
 	http.Handle(path, http.HandlerFunc(handleFunction))
 }
 
-func Get(path string, handler http.Handler) {
-	handlerWrapper(path, handler, http.MethodGet)
+func Get(path string, handler http.Handler, db *Datastore) {
+	handlerWrapper(path, handler, http.MethodGet, db)
 }
 
-func Post(path string, handler http.Handler) {
-	handlerWrapper(path, handler, http.MethodPost)
+func Post(path string, handler http.Handler, db *Datastore) {
+	handlerWrapper(path, handler, http.MethodPost, db)
 }

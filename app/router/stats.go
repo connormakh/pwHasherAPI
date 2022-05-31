@@ -4,8 +4,11 @@ import (
 	"github.com/connormakh/pwHashApi/app/utils"
 	"net/http"
 )
-const GetUrl = "/stats"
+const getUrl = "/stats"
 
-func HandleStatsRequests() {
-	utils.Get(GetUrl, http.HandlerFunc(handler.GetStats))
+
+func HandleStatsRequests(db *utils.Datastore) {
+	h := handler.StatsHandlerContext{DbSession: db}
+
+	utils.Get(getUrl, http.HandlerFunc(h.GetStats), db)
 }

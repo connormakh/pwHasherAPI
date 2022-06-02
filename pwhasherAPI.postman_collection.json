@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "2390f957-ce80-483b-a3e2-36cbf7458148",
+		"name": "pwhasherAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:10000/stats",
+					"host": [
+						"localhost"
+					],
+					"port": "10000",
+					"path": [
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST hash",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "password",
+							"value": "omg123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:10000/hash",
+					"host": [
+						"localhost"
+					],
+					"port": "10000",
+					"path": [
+						"hash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Hash",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:10000/hash/1",
+					"host": [
+						"localhost"
+					],
+					"port": "10000",
+					"path": [
+						"hash",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Shutdown",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:10000/shutdown",
+					"host": [
+						"localhost"
+					],
+					"port": "10000",
+					"path": [
+						"shutdown"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

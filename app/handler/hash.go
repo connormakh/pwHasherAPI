@@ -7,11 +7,13 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
 type HashHandlerContext struct {
 	DbSession *utils.Datastore
+	Wg        *sync.WaitGroup
 }
 
 func (ctx *HashHandlerContext) PostHash(w http.ResponseWriter, r *http.Request) {
@@ -22,9 +24,11 @@ func (ctx *HashHandlerContext) PostHash(w http.ResponseWriter, r *http.Request) 
 	}
 	inputPassword := r.Form.Get("password")
 	currentId := ctx.DbSession.Increment()
-	fmt.Fprint(w, currentId)
+	fmt.Fprint(w, utils.ToJson(response.NewPostHashResponse(currentId)))
 	// run on another thread to avoid delaying response
+	ctx.Wg.Add(1)
 	go func() {
+		defer ctx.Wg.Done()
 		time.Sleep(5 * time.Second)
 		ctx.DbSession.Insert(currentId, utils.Hash(inputPassword))
 		elapsed := time.Since(start)
@@ -39,19 +43,13 @@ func (ctx *HashHandlerContext) GetHash(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprint(w, utils.ToJson(response.ErrorResponse{
-			Message: "Malformed id",
-			Id:      "err_malformed_id",
-		}))
+		fmt.Fprint(w, utils.ToJson(response.NewGetHashMalformedIdError()))
 		return
 	}
 	result := ctx.DbSession.FindOne(idInt)
 	if result == "" {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, utils.ToJson(response.ErrorResponse{
-			Message: "Hash not found",
-			Id:      "err_hash_not_found",
-		}))
+		fmt.Fprint(w, utils.ToJson(response.NewGetHashNotFoundError()))
 		return
 	}
 	hashResponse := response.GetHashResponse{
@@ -59,4 +57,3 @@ func (ctx *HashHandlerContext) GetHash(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Fprint(w, utils.ToJson(hashResponse))
 }
-

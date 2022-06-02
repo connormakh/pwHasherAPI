@@ -1,8 +1,13 @@
 package main
 
-import "github.com/connormakh/pwHashApi/app"
+import (
+	"github.com/connormakh/pwHashApi/app/launcher"
+	"os"
+	"sync"
+)
 
 func main() {
-	service := app.App{}
-	service.Initialize()
+	c := make(chan os.Signal, 1)
+	wg := &sync.WaitGroup{}
+	launcher.Initialize(c, wg)
 }

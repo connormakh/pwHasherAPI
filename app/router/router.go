@@ -1,15 +1,14 @@
 package router
 
 import (
-	"github.com/connormakh/pwHashApi/app/utils"
-	"log"
-	"net/http"
+	"github.com/connormakh/pwHashApi/app/model"
 )
 
-func SetupHttpListeners(db *utils.Datastore) {
-	HandleHashRequests(db)
-	HandleStatsRequests(db)
+func SetupHttpListeners(serverContext *model.ServerContext) {
+	HandleHashRequests(serverContext)
+	HandleStatsRequests(serverContext)
+	HandleMiscRequests(serverContext)
 
-	log.Fatal(http.ListenAndServe(":10000", nil))
+	//log.Fatal(http.ListenAndServe(":10000", nil))
 }
 

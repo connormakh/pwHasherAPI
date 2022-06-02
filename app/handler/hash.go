@@ -32,7 +32,7 @@ func (ctx *HashHandlerContext) PostHash(w http.ResponseWriter, r *http.Request) 
 		time.Sleep(5 * time.Second)
 		ctx.DbSession.Insert(currentId, utils.Hash(inputPassword))
 		elapsed := time.Since(start)
-		ctx.DbSession.CountTime(elapsed.Nanoseconds())
+		ctx.DbSession.CountTime(elapsed.Milliseconds())
 	}()
 
 }

@@ -13,8 +13,8 @@ func NewGetHashMalformedIdError() ErrorResponse {
 
 func NewGetHashNotFoundError() ErrorResponse {
 	return ErrorResponse{
-		Message: "Malformed id",
-		Id:      "err_malformed_id",
+		Message: "Hash not found",
+		Id:      "err_hash_not_found",
 	}
 }
 

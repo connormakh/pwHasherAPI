@@ -34,3 +34,4 @@ Endpoints match those specified in the document. For ease of use, a Postman JSON
 
 ## Assumptions
 - A simplified in-memory datastore was implemented to keep the focus on core functionality, and not include any external dependencies. The caveat of this is that data doesn't persist between runs
+- Time for processing requests under POST /hash is calculated as the time since request began until the time the hash is generated. 
